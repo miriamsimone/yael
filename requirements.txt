@@ -1,0 +1,16 @@
+# ElevenLabs SDK for conversational AI
+elevenlabs>=1.0.0
+
+# Audio handling
+pyaudio>=0.2.13
+sounddevice>=0.4.6
+
+# Environment configuration
+python-dotenv>=1.0.0
+
+# Async support
+aiohttp>=3.9.0
+websockets>=12.0
+
+# Utility
+rich>=13.7.0  # For beautiful CLI output
