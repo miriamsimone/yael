@@ -1,0 +1,51 @@
+services:
+  neo4j:
+    image: neo4j:5.26-community
+    container_name: yael-neo4j
+    ports:
+      - "7475:7474"  # Browser
+      - "7688:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/yaelgraph
+      - NEO4J_PLUGINS=["apoc"]
+    volumes:
+      - yael_neo4j_data:/data
+      - yael_neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: yael-ollama
+    profiles:
+      - with-ollama  # Start with: docker-compose --profile with-ollama up -d
+    ports:
+      - "11434:11434"
+    volumes:
+      - yael_ollama_data:/root/.ollama
+    # GPU support for Linux with NVIDIA
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  yael_neo4j_data:
+    driver: local
+  yael_neo4j_logs:
+    driver: local
+  yael_ollama_data:
+    driver: local

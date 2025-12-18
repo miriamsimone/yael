@@ -1,0 +1,23 @@
+[project]
+name = "yael"
+version = "0.1.0"
+description = "Self-hosted LLM with graph memory"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "graphiti-core>=0.24",
+    "neo4j>=5.0",
+    "openai>=1.0",
+    "ollama>=0.1",
+    "rich>=13.0",
+    "prompt_toolkit>=3.0",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+]
+
+[project.scripts]
+yael = "yael.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
